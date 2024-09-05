@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, "Password is required"],
-        minlenght: [6, "Password must be at least 6 characters long"],
+        minlength: [6, "Password must be at least 6 characters long"],
     },
     cartItems: [
         {
@@ -39,8 +39,6 @@ const userSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const User = mongoose.model("User", userSchema);
-
 // Pres-save hook to hash password before saving user to database
 userSchema.pre("save", async function (next) {
     if(!this.isModified("password")) return next();
@@ -58,5 +56,7 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.comparePassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 }
+
+const User = mongoose.model("User", userSchema);
 
 export default User;
