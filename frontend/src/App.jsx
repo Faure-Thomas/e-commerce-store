@@ -1,9 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
-import Navbar from "./components/Navbar";
+import CategoryPage from "./pages/CategoryPage";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
 import { useEffect } from "react";
@@ -39,6 +40,10 @@ function App() {
                     <Route
                         path="/login"
                         element={!user ? <LoginPage /> : <Navigate to="/" />}
+                    />
+                    <Route
+                        path="/category/:category"
+                        element={<CategoryPage />}
                     />
                     <Route
                         path="/secret-dashboard"
