@@ -6,6 +6,8 @@ import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import CategoryPage from "./pages/CategoryPage";
 import CartPage from "./pages/CartPage";
+import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
+import PurchaseCancelPage from "./pages/PurchaseCancelPage";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
 import { useCartStore } from "./stores/useCartStore";
@@ -56,6 +58,26 @@ function App() {
                     <Route
                         path="/cart"
                         element={user ? <CartPage /> : <Navigate to="/login" />}
+                    />
+                    <Route
+                        path="/purchase-success"
+                        element={
+                            user ? (
+                                <PurchaseSuccessPage />
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/purchase-cancel"
+                        element={
+                            user ? (
+                                <PurchaseCancelPage />
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        }
                     />
                     <Route
                         path="/secret-dashboard"
