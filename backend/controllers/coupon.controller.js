@@ -11,9 +11,10 @@ export const getCoupon = async (req, res) => {
 };
 
 export const validateCoupon = async (req, res) => {
+    console.log("validateCoupon controller");
     try {
-        const { code } = req.body;
-        const coupon = await Coupon.findOne({ code: code, userId: req.user._id, isActive: true });
+        const { couponCode } = req.body;
+        const coupon = await Coupon.findOne({ code: couponCode, userId: req.user._id, isActive: true });
 
         if(!coupon) {
             return res.status(404).json({ message: "Coupon not found" });

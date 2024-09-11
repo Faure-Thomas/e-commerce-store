@@ -15,6 +15,7 @@ const createStripeCoupon = async (discountPercentage) => {
 }
 
 const createNewCoupon = async (userId) => {
+    await Coupon.findOneAndDelete({ userId: userId });
     const newCoupon = new Coupon({
         code: "GIFT" + Math.random().toString(36).substring(2, 8).toUpperCase(),
         discountPercentage: 10,
@@ -96,6 +97,7 @@ export const checkoutSuccess = async (req, res) => {
     try {
         const { sessionId } = req.body;
         const session = await stripe.checkout.sessions.retrieve(sessionId);
+        const user = req.user;
 
         if(session.payment_status === "paid") {
 
@@ -120,6 +122,11 @@ export const checkoutSuccess = async (req, res) => {
             });
 
             await newOrder.save();
+
+            // Empty the cart
+            user.cartItems = [];
+            await user.save();
+
             return res.status(200).json({
                 success: true,
                 message: "Payment successful, order created and coupon deactivated if used",
